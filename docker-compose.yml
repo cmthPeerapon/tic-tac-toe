@@ -1,0 +1,8 @@
+version: '3.9'
+
+services:
+  react:
+    container_name: tic-tac-toe
+    image: tic-tac-toe
+    ports:
+      - 80:80
