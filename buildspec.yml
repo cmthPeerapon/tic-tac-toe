@@ -24,7 +24,7 @@ phases:
       - echo Entered build phase
       - docker buildx create --driver docker-container --use
       # Nginx image
-      - docker buildx build --cache-to type=local,dest=cache --cache-from type=local,src=cache -t ttt:tic-tac-toe --load .
+      - docker buildx build --cache-to type=local,dest=cache --cache-from type=local,src=cache -t ${ECR_ENDPOINT}/${ECR_REPO_NAME}:tic-tac-toe --load .
       - echo Build completed successfully
 
   post_build:
