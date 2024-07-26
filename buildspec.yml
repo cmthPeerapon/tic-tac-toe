@@ -16,6 +16,7 @@ phases:
       - echo Entered pre_build phase
       # log in to ECR
       - echo Logging in to Amazon ECR
+      - docker logout public.ecr.aws
       - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_ENDPOINT}
 
   build:
@@ -37,7 +38,7 @@ phases:
       - docker push ${ECR_ENDPOINT}/${ECR_REPO_NAME}:tic-tac-toe
       # log out from ECR
       - echo Logging out from Amazon ECR
-      - docker logout
+      - docker logout public.ecr.aws
 
 cache:
   paths:
