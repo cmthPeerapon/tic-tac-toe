@@ -6,7 +6,7 @@ phases:
     commands:
       - echo Entered pre_build phase
       - echo Logging in to Amazon ECR
-      - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 857407436105.dkr.ecr.ap-northeast-1.amazonaws.com
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_ENDPOINT
   build:
     on-failure: ABORT
     commands:
@@ -16,7 +16,7 @@ phases:
       - docker buildx build \
         --cache-to type=local,dest=cache \
         --cache-from type=local,dest=cache \
-        -t 857407436105.dkr.ecr.ap-northeast-1.amazonaws.com/nodejs-codebuild-test-repo:tic-tac-toe
+        -t $ECR_ENDPOINT/$ECR_REPO_NAME:tic-tac-toe
         --load \
         .
       - echo Build completed successfully
@@ -25,7 +25,7 @@ phases:
     commands:
       - echo Entered post_build phase
       - echo Pushing image to Amazon ECR repository
-      - docker push 857407436105.dkr.ecr.ap-northeast-1.amazonaws.com/nodejs-codebuild-test-repo:latest
+      - docker push $ECR_ENDPOINT/$ECR_REPO_NAME:tic-tac-toe
       - echo Logging out from Amazon ECR
       - docker logout
 
