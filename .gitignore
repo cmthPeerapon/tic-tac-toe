@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# docker-credentials
+docker-credential-secretservice
+
+# docker cache
+**/*.cache
+
+# k8s
+.kuberlr/**/*

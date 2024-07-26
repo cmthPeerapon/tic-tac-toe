@@ -1,5 +1,5 @@
 # build
-FROM node:latest as builder
+FROM node:latest AS builder
 
 WORKDIR /usr/src/app
 
@@ -15,8 +15,6 @@ RUN npm run build
 FROM nginx:latest
 
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
-
-WORKDIR /usr/share/nginx/html
 
 EXPOSE 80
 

@@ -113,9 +113,9 @@ function App() {
     const o = [];
 
     currentBoardStatus.map((row, rowIndex) => {
-      row.map((box, boxIndex) => {
+      return row.map((box, boxIndex) => {
         if (box) {
-          (box === '✕')
+          return (box === '✕')
             ? x.push((3 * rowIndex) + boxIndex + 1)
             : o.push((3 * rowIndex) + boxIndex + 1)
         }
@@ -123,7 +123,7 @@ function App() {
     })
 
     let winner = null;
-    const getWinner = winning.forEach((pattern) => {
+    winning.forEach((pattern) => {
       if (pattern.every((move) => x.includes(move))) {
         winner = [pattern, '✕']
       }
