@@ -23,6 +23,7 @@ phases:
     commands:
       - echo Entered build phase
       - docker buildx create --driver docker-container --use
+      - npm ci
       # Nginx image
       - docker buildx build --cache-to type=local,dest=cache --cache-from type=local,src=cache -t ${ECR_ENDPOINT}/${ECR_REPO_NAME}:tic-tac-toe --load .
       - echo Build completed successfully
@@ -41,3 +42,4 @@ phases:
 cache:
   paths:
     - 'cache/**/*'
+    - 'node_modules/**/*'
