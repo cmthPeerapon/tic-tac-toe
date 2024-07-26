@@ -7,7 +7,7 @@ RUN npm run build
 # deploy
 FROM public.ecr.aws/nginx/nginx:stable-perl
 
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+COPY /usr/src/app/build /usr/share/nginx/html
 
 EXPOSE 80
 
