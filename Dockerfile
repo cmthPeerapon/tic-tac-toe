@@ -1,4 +1,6 @@
-FROM 857407436105.dkr.ecr.ap-northeast-1.amazonaws.com/nodejs-codebuild-test-repo:builder as builder
+FROM 857407436105.dkr.ecr.ap-northeast-1.amazonaws.com/nodejs-codebuild-test-repo:builder AS builder
+
+WORKDIR /usr/src/app
 
 COPY . .
 
