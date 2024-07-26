@@ -1,2 +1,12 @@
-node_modules/
-build/
+node_modules
+build
+public
+*cache
+.kuberlr
+.github
+coverage
+hello-word-docker-action
+docker-credential-secretservice
+*.yml
+.gitignore
+.dockerignore
