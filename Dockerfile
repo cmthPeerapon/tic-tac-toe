@@ -1,5 +1,5 @@
 # build
-FROM public.ecr.aws/docker/library/node:20.16.0-alpine3.20 AS builder
+FROM public.ecr.aws/docker/library/node:20.16.0 AS builder
 
 WORKDIR /usr/src/app
 
@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # deploy
-FROM public.ecr.aws/nginx/nginx:stable-perl:latest
+FROM public.ecr.aws/nginx/nginx:stable-perl
 
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 
