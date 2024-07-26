@@ -1,36 +1,41 @@
 version: 0.2
 
+env:
+  variables:
+    ECR_REPO_NAME: "nodejs-codebuild-test-repo"
+  parameter-store:
+    ECR_ENDPOINT: "ECR_ENDPOINT"
+  exported-variable:
+    - ECR_REPO_NAME
+    - ECR_ENDPOINT
+
 phases:
   pre_build:
-    on-failure:
-      - ABORT
+    on-failure: ABORT
     commands:
       - echo Entered pre_build phase
+      # log in to ECR
       - echo Logging in to Amazon ECR
-      - echo $AWS_REGION $ECR_ENDPOINT
-      - codebuild-breakpoint
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_ENDPOINT
+      - echo ${AWS_REGION}
+      - echo ${ECR_ENDPOINT}
+      - echo ${ECR_REPO_NAME}
+      - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_ENDPOINT}
+
   build:
-    on-failure:
-      - ABORT
+    on-failure: ABORT
     commands:
       - echo Entered build phase
       - docker buildx create --driver docker-container --use
       # Nginx image
-      - docker buildx build \
-        --cache-to type=local,dest=cache \
-        --cache-from type=local,dest=cache \
-        -t $ECR_ENDPOINT/$ECR_REPO_NAME:tic-tac-toe
-        --load \
-        .
+      - docker buildx build --cache-to type=local,dest=cache --cache-from type=local,src=cache -t ttt:tic-tac-toe --load .
       - echo Build completed successfully
+
   post_build:
-    on-failure:
-      - ABORT
+    on-failure: ABORT
     commands:
       - echo Entered post_build phase
       - echo Pushing image to Amazon ECR repository
-      - docker push $ECR_ENDPOINT/$ECR_REPO_NAME:tic-tac-toe
+      - docker push ${ECR_ENDPOINT}/${ECR_REPO_NAME}:tic-tac-toe
       - echo Logging out from Amazon ECR
       - docker logout
 
