@@ -1,15 +1,22 @@
-FROM 857407436105.dkr.ecr.ap-northeast-1.amazonaws.com/nodejs-codebuild-test-repo:builder AS builder
+# build
+FROM public.ecr.aws/docker/library/node:20.16.0 AS builder
 
 WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
 
 COPY . .
 
 RUN npm run build
 
 # deploy
-FROM public.ecr.aws/nginx/nginx:stable-perl
+FROM public.ecr.aws/nginx/nginx:stable-perl AS prod
 
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+
+COPY --from=ass --chown=root:root package.json .
 
 EXPOSE 80
 
