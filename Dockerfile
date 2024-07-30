@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # deploy
-FROM public.ecr.aws/nginx/nginx:stable-perl
+FROM public.ecr.aws/nginx/nginx:stable-perl AS prod
 
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 
