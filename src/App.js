@@ -85,7 +85,7 @@ function MoveHistory({ gameHistory, timeTravel }) {
 function Version() {
   return (
     <div className="absolute bottom-0 right-0 select-none">
-      <span>Version 3.0</span>
+      <span>Version 4.0</span>
     </div>
   );
 }
