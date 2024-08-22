@@ -1,0 +1,9 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:ap-northeast-1:857407436105:task-definition/peerapon-ttt-task-def:2"
+        LoadBalancerInfo:
+          ContainerName: "tic-tac-toe"
+          ContainerPort: "80"

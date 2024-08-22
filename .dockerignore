@@ -9,3 +9,5 @@ docker-credential-secretservice
 *.yml
 .gitignore
 .dockerignore
+Dockerfile
+docker-compose.yml

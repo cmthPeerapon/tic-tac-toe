@@ -75,6 +75,14 @@ function MoveHistory({ gameHistory, timeTravel }) {
   );
 }
 
+function Version() {
+  return (
+    <div className="absolute bottom-0 right-0 select-none">
+      <span>Version 2.0</span>
+    </div>
+  )
+}
+
 function App() {
   const [currentBoardStatus, setCurrentBoardStatus] = useState(Array(3).fill(Array(3).fill(null)));
   const [gameHistory, setGameHistory] = useState([Array(3).fill(Array(3).fill(null))]);
@@ -140,6 +148,7 @@ function App() {
     <div className="h-screen flex items-center justify-center">
       <Board currentBoardStatus={currentBoardStatus} updateMove={updateMove} xTurn={xTurn} winner={winner()} />
       <MoveHistory gameHistory={gameHistory} timeTravel={timeTravel} />
+      <Version />
     </div>
   );
 }
