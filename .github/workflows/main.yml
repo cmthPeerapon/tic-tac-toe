@@ -1,26 +1,30 @@
 name: Example Workflow
 
 on:
-  workflow_dispatch:
-    inputs:
-      who-to-greet:
-        description: Who to greet in the log
-        required: true
-        default: 'World'
-        type: string
+  push:
+    branches: main
+
+env:
+  AWS_REGION: "ap-southeast-1"
 
 jobs:
-  say-hello:
-    name: Say Hello
+  AssumeRole:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Git clone the repository
+        uses: actions/checkout@v3
       # Change @main to a specific commit SHA or version tag, e.g.:
       # actions/hello-world-docker-action@e76147da8e5c81eaf017dede5645551d4b94427b
       # actions/hello-world-docker-action@v1.2.3
-      - name: Print to Log
+      - name: AssumeRoleAndCallIdentity
         id: print-to-log
-        uses: ./hello-world-docker-action
+        uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          who-to-greet: ${{ inputs.who-to-greet }}
+          role-to-assume: arn:aws:iam::857407436105:role/peerapon-ghwf-as-codedeploy
+          role-session-name: peerapon-ghwf-as-codedeploy
+          aws-region: ${{ env.AWS_REGION }}
+  TestAssumeRole:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sts GetCallerIdentity
+        run: aws sts get-caller-identity
