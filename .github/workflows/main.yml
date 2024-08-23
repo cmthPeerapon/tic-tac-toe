@@ -27,8 +27,5 @@ jobs:
           role-to-assume: arn:aws:iam::857407436105:role/peerapon-ghwf-as-codedeploy
           role-session-name: peerapon-ghwf-as-codedeploy
           aws-region: ${{ env.AWS_REGION }}
-  TestAssumeRole:
-    runs-on: ubuntu-latest
-    steps:
       - name: Sts GetCallerIdentity
         run: aws sts get-caller-identity
