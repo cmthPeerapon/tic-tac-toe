@@ -1,4 +1,4 @@
-name: Example Workflow
+name: Deploy Workflow
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 jobs:
-  AssumeRole:
+  DeployAppOnEc2:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
