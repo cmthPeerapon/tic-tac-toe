@@ -13,15 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      - name: Install Docker
-        run: |
-          apt-get update
-          apt-get install -y docker.io
-
-      - name: Check Docker version
-        run: docker --version
+        uses: actions/checkout@v4
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3

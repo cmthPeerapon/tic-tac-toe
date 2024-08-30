@@ -16,13 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
-        uses: actions/checkout@v3
-      # Change @main to a specific commit SHA or version tag, e.g.:
-      # actions/hello-world-docker-action@e76147da8e5c81eaf017dede5645551d4b94427b
-      # actions/hello-world-docker-action@v1.2.3
+        uses: actions/checkout@v4
       - name: AssumeRoleAndCallIdentity
         id: print-to-log
-        uses: aws-actions/configure-aws-credentials@v1.7.0
+        uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
           role-to-assume: arn:aws:iam::857407436105:role/peerapon-ghwf-as-codedeploy
           role-session-name: peerapon-ghwf-as-codedeploy
