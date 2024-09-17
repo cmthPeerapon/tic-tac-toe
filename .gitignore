@@ -30,3 +30,6 @@ docker-credential-secretservice
 
 # k8s
 .kuberlr/**/*
+
+# terraform
+terraform/.*
