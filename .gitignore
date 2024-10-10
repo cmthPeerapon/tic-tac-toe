@@ -33,3 +33,7 @@ docker-credential-secretservice
 
 # terraform
 terraform/.*
+!terraform/.terraform.lock.hcl
+
+# localstack
+localstack*

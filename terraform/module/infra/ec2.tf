@@ -28,11 +28,14 @@ data "aws_ami" "amazon_linux_2023" {
   }
 }
 
-resource "aws_instance" "ec2-linux-server" {
-  ami = data.aws_ami.amazon_linux_2023.image_id
+resource "aws_instance" "ec2_linux_server" {
+  count           = var.number_of_ec2_instance
+  ami             = data.aws_ami.amazon_linux_2023.image_id
+  instance_type   = var.ec2_instance_type
+  subnet_id       = var.subnet_id
+  vpc_security_group_ids = var.security_groups[*]
   tags = {
-    "Name" = var.ec2_instance_name
+    "Name"           = "${var.ec2_instance_name}-${count.index + 1}"
     "CmBillingGroup" = ""
   }
-  instance_type = "t3.large"
 }
