@@ -1,14 +1,14 @@
-ec2_instance_name = "peerapon-test-ec2"
+TF_VAR_region             = "ap-northeast-1"
+TF_VAR_resource_base_name = "peerapon-test"
+
 ec2_instance_type = "t3.small"
 
-region   = "ap-northeast-1"
-vpc_name = "peerapon"
 security_group_inbound_rules = {
-  "allow_https" = {
+  "allow_eip_ssh" = {
     cidr_ipv4   = "3.112.23.0/29"
-    from_port   = 443
+    from_port   = 22
     ip_protocol = "tcp"
-    to_port     = 443
+    to_port     = 22
   },
   "allow_http" = {
     cidr_ipv4   = "0.0.0.0/0"
@@ -17,7 +17,7 @@ security_group_inbound_rules = {
     to_port     = 80
   },
   "allow_ssh" = {
-    cidr_ipv4   = "104.28.214.146/32"
+    cidr_ipv4   = "101.108.71.45/32"
     from_port   = 22
     ip_protocol = "tcp"
     to_port     = 22

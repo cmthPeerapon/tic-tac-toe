@@ -1,45 +1,87 @@
-module.network.data.aws_availability_zones.available: Reading...
+module.iam.data.aws_iam_policy_document.assume_role: Reading...
 module.infra.data.aws_ami.amazon_linux_2023: Reading...
+module.iam.data.aws_iam_policy.policy: Reading...
+module.network.data.aws_availability_zones.available: Reading...
 module.network.aws_vpc.main_vpc: Refreshing state... [id=vpc-00c50fd1bfa881f9b]
+module.iam.data.aws_iam_policy_document.assume_role: Read complete after 0s [id=2851119427]
+module.iam.aws_iam_role.ec2_instance_profile_role: Refreshing state... [id=peerapon-test-ec2-profile-role]
 module.network.data.aws_availability_zones.available: Read complete after 1s [id=ap-northeast-1]
 module.infra.data.aws_ami.amazon_linux_2023: Read complete after 1s [id=ami-0ef29ab52ff72213b]
+module.iam.data.aws_iam_policy.policy: Read complete after 1s [id=arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore]
 module.network.aws_internet_gateway.igw: Refreshing state... [id=igw-09879e37c267fba37]
-module.network.aws_route_table.private_rt: Refreshing state... [id=rtb-026bf8b77041a47ba]
 module.network.aws_route_table.public_rt: Refreshing state... [id=rtb-0ad0977529aa3bacc]
+module.network.aws_route_table.private_rt: Refreshing state... [id=rtb-026bf8b77041a47ba]
 module.network.aws_subnet.private_subnets[1]: Refreshing state... [id=subnet-038fafd2f66a2d9df]
 module.network.aws_subnet.private_subnets[0]: Refreshing state... [id=subnet-03f2dac3bde35e0c0]
+module.network.aws_subnet.public_subnets[1]: Refreshing state... [id=subnet-088a6557b05842657]
 module.network.aws_subnet.public_subnets[0]: Refreshing state... [id=subnet-0d6dd8b8ea50421b8]
 module.network.aws_security_group.ec2_security_group: Refreshing state... [id=sg-04608d621c50e44f5]
-module.network.aws_subnet.public_subnets[1]: Refreshing state... [id=subnet-088a6557b05842657]
 module.network.aws_route.internet: Refreshing state... [id=r-rtb-0ad0977529aa3bacc1080289494]
+module.iam.aws_iam_role_policy_attachment.ec2_instance_profile_attachment: Refreshing state... [id=peerapon-test-ec2-profile-role-20241011052108422400000001]
+module.iam.aws_iam_instance_profile.ec2_instance_profile: Refreshing state... [id=peerapon-test-ec2-profile]
 module.network.aws_route_table_association.private_rt_assoc[1]: Refreshing state... [id=rtbassoc-0406d35e34a1b81e2]
 module.network.aws_route_table_association.private_rt_assoc[0]: Refreshing state... [id=rtbassoc-060f3edbe1fc5ee07]
-module.network.aws_route_table_association.public_rt_assoc[0]: Refreshing state... [id=rtbassoc-03bb2995053aef621]
-module.network.aws_route_table_association.public_rt_assoc[1]: Refreshing state... [id=rtbassoc-0309015546ef68c49]
-module.network.aws_vpc_security_group_ingress_rule.inbound_rule["allow_http"]: Refreshing state... [id=sgr-04cb0201ba5cdd1f1]
-module.network.aws_vpc_security_group_ingress_rule.inbound_rule["allow_https"]: Refreshing state... [id=sgr-07ac927f52c57e408]
 module.network.aws_vpc_security_group_ingress_rule.inbound_rule["allow_ssh"]: Refreshing state... [id=sgr-0f1b79650a16e3988]
+module.network.aws_vpc_security_group_ingress_rule.inbound_rule["allow_http"]: Refreshing state... [id=sgr-04cb0201ba5cdd1f1]
+module.network.aws_vpc_security_group_egress_rule.outbound_rule["allow_all_traffic"]: Refreshing state... [id=sgr-02e50d50e4bdafe51]
+module.network.aws_route_table_association.public_rt_assoc[0]: Refreshing state... [id=rtbassoc-03bb2995053aef621]
+module.network.aws_vpc_security_group_ingress_rule.inbound_rule["allow_all_https"]: Refreshing state... [id=sgr-0dfca8e16c2924291]
+module.network.aws_vpc_security_group_ingress_rule.inbound_rule["allow_https"]: Refreshing state... [id=sgr-07ac927f52c57e408]
+module.network.aws_route_table_association.public_rt_assoc[1]: Refreshing state... [id=rtbassoc-0309015546ef68c49]
 module.infra.aws_instance.ec2_linux_server[0]: Refreshing state... [id=i-04a78b2dcbb69d5e9]
 
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
   + create
+  - destroy
 
 Terraform will perform the following actions:
 
-  # module.network.aws_vpc_security_group_egress_rule.outbound_rule["allow_all_traffic"] will be created
-  + resource "aws_vpc_security_group_egress_rule" "outbound_rule" {
+  # module.network.aws_vpc_security_group_ingress_rule.inbound_rule["allow_all_https"] will be destroyed
+  # (because key ["allow_all_https"] is not in for_each map)
+  - resource "aws_vpc_security_group_ingress_rule" "inbound_rule" {
+      - arn                    = "arn:aws:ec2:ap-northeast-1:857407436105:security-group-rule/sgr-0dfca8e16c2924291" -> null
+      - cidr_ipv4              = "0.0.0.0/0" -> null
+      - description            = "allow_all_https" -> null
+      - from_port              = 443 -> null
+      - id                     = "sgr-0dfca8e16c2924291" -> null
+      - ip_protocol            = "tcp" -> null
+      - security_group_id      = "sg-04608d621c50e44f5" -> null
+      - security_group_rule_id = "sgr-0dfca8e16c2924291" -> null
+      - tags_all               = {} -> null
+      - to_port                = 443 -> null
+    }
+
+  # module.network.aws_vpc_security_group_ingress_rule.inbound_rule["allow_eip_ssh"] will be created
+  + resource "aws_vpc_security_group_ingress_rule" "inbound_rule" {
       + arn                    = (known after apply)
-      + cidr_ipv4              = "0.0.0.0/0"
-      + description            = "allow_all_traffic"
+      + cidr_ipv4              = "3.112.23.0/29"
+      + description            = "allow_eip_ssh"
+      + from_port              = 22
       + id                     = (known after apply)
-      + ip_protocol            = "-1"
+      + ip_protocol            = "tcp"
       + security_group_id      = "sg-04608d621c50e44f5"
       + security_group_rule_id = (known after apply)
       + tags_all               = {}
+      + to_port                = 22
     }
 
-Plan: 1 to add, 0 to change, 0 to destroy.
+  # module.network.aws_vpc_security_group_ingress_rule.inbound_rule["allow_https"] will be destroyed
+  # (because key ["allow_https"] is not in for_each map)
+  - resource "aws_vpc_security_group_ingress_rule" "inbound_rule" {
+      - arn                    = "arn:aws:ec2:ap-northeast-1:857407436105:security-group-rule/sgr-07ac927f52c57e408" -> null
+      - cidr_ipv4              = "3.112.23.0/29" -> null
+      - description            = "allow_https" -> null
+      - from_port              = 443 -> null
+      - id                     = "sgr-07ac927f52c57e408" -> null
+      - ip_protocol            = "tcp" -> null
+      - security_group_id      = "sg-04608d621c50e44f5" -> null
+      - security_group_rule_id = "sgr-07ac927f52c57e408" -> null
+      - tags_all               = {} -> null
+      - to_port                = 443 -> null
+    }
+
+Plan: 1 to add, 0 to change, 2 to destroy.
 
 ─────────────────────────────────────────────────────────────────────────────
 

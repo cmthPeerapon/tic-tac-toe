@@ -3,7 +3,7 @@ data "aws_availability_zones" "available" {
 
   filter {
     name   = "region-name"
-    values = [var.region]
+    values = [var.TF_VAR_region]
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_vpc" "main_vpc" {
   enable_dns_hostnames = true
 
   tags = {
-    "Name" : var.vpc_name
+    "Name" : "${var.TF_VAR_resource_base_name}-vpc"
     "CmBillingGroup" : ""
   }
 }
@@ -90,11 +90,11 @@ resource "aws_route_table_association" "private_rt_assoc" {
 }
 
 resource "aws_security_group" "ec2_security_group" {
-  name   = var.security_group_name
+  name   = "${var.TF_VAR_resource_base_name}-sg"
   vpc_id = aws_vpc.main_vpc.id
 
   tags = {
-    "Name" : var.security_group_name
+    "Name" : "${var.TF_VAR_resource_base_name}-sg"
     "CmBillingGroup" : ""
   }
 }

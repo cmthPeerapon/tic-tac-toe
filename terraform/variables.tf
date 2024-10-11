@@ -1,4 +1,21 @@
 # ==============================================================================
+# Global variable
+# Description: Global variables that will be used across the project
+# ==============================================================================
+
+variable "TF_VAR_resource_base_name" {
+  type        = string
+  default     = "terraform"
+  description = "Base name for all of the created resources"
+}
+
+variable "TF_VAR_region" {
+  type        = string
+  default     = "ap-northeast-1"
+  description = "The region your infrastructure will be deployed in"
+}
+
+# ==============================================================================
 # Module: infra
 # Description: Sets up EC2, ECS, and related infrastructure resources
 # ==============================================================================
@@ -7,12 +24,6 @@ variable "number_of_ec2_instance" {
   type        = number
   default     = 1
   description = "Number of instance to deploy"
-}
-
-variable "ec2_instance_name" {
-  type        = string
-  default     = "peerapon-test"
-  description = "Name of the instance"
 }
 
 variable "ec2_instance_type" {
@@ -31,7 +42,7 @@ variable "subnet_id" {
   description = "Subnet id where an EC2 resides"
 }
 
-variable "security_groups" {
+variable "security_group_ids" {
   type        = list(string)
   default     = []
   description = "Security group ids where an EC2 resides"
@@ -43,6 +54,12 @@ variable "is_private" {
   description = "Specify whether the EC2 should be put in a private subnet or not. If 'subnet_id' is specified, this variable will be ignored."
 }
 
+variable "ec2_instance_profile_name" {
+  type        = string
+  default     = ""
+  description = "ARN of an instance profile to attach to the EC2"
+}
+
 # ==============================================================================
 # Module: network
 # Description: Sets up VPC, subnets, and related networking resources
@@ -52,12 +69,6 @@ variable "region" {
   type        = string
   default     = "ap-northeast-1"
   description = "The region your infrastructure will be deployed in"
-}
-
-variable "vpc_name" {
-  type        = string
-  default     = "peerapon-test"
-  description = "Name of the VPC"
 }
 
 variable "cidr_block" {
@@ -94,12 +105,6 @@ variable "private_subnet_cidr_blocks" {
     condition     = length(var.private_subnet_cidr_blocks) == var.number_of_private_subnets
     error_message = "The number of specified private subnet CIDR blocks must match the 'number_of_private_subnets' value"
   }
-}
-
-variable "security_group_name" {
-  type        = string
-  default     = "peerapon-test-sg"
-  description = "Name of the security group to be attached to the EC2"
 }
 
 variable "security_group_inbound_rules" {

@@ -1,13 +1,11 @@
-variable "region" {
+variable "TF_VAR_resource_base_name" {
   type        = string
-  default     = "ap-northeast-1"
-  description = "The region your infrastructure will be deployed in"
+  description = "Base name for all of the created resources"
 }
 
-variable "vpc_name" {
+variable "TF_VAR_region" {
   type        = string
-  default     = "peerapon-test-vpc"
-  description = "Name of the VPC"
+  description = "The region your infrastructure will be deployed in"
 }
 
 variable "cidr_block" {
@@ -44,12 +42,6 @@ variable "private_subnet_cidr_blocks" {
     condition     = length(var.private_subnet_cidr_blocks) == var.number_of_private_subnets
     error_message = "The number of specified private subnet CIDR blocks must match the 'number_of_private_subnets' value"
   }
-}
-
-variable "security_group_name" {
-  type        = string
-  default     = "peerapon-test-sg"
-  description = "Name of the security group to be attached to the EC2"
 }
 
 variable "security_group_inbound_rules" {
