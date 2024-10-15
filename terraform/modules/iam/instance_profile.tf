@@ -9,6 +9,18 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
+data "aws_iam_policy_document" "get_code_deploy_agent" {
+  statement {
+    sid    = "getCodeDeployAgent"
+    effect = "Allow"
+    actions = [
+      "s3:Get*",
+      "s3:List*"
+    ]
+    resources = ["arn:aws:s3:::aws-codedeploy-${var.TF_VAR_region}/*"]
+  }
+}
+
 data "aws_iam_policy" "policy" {
   arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
@@ -21,6 +33,13 @@ resource "aws_iam_role" "ec2_instance_profile_role" {
 resource "aws_iam_role_policy_attachment" "ec2_instance_profile_attachment" {
   role       = aws_iam_role.ec2_instance_profile_role.name
   policy_arn = data.aws_iam_policy.policy.arn
+}
+
+# Create and attach an additional inline policy to the 'aws_iam_role.ec2_instance_profile_role'
+resource "aws_iam_role_policy" "get_code_deploy_agent_policy" {
+  name   = "get_code_deploy_agent_policy"
+  policy = data.aws_iam_policy_document.get_code_deploy_agent.json
+  role   = aws_iam_role.ec2_instance_profile_role.name
 }
 
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
