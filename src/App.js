@@ -85,7 +85,7 @@ function MoveHistory({ gameHistory, timeTravel }) {
 function Version() {
   return (
     <div className="absolute bottom-0 right-0 select-none">
-      <span>Version 4.0</span>
+      <span>Version 2.0</span>
     </div>
   );
 }
@@ -131,15 +131,15 @@ function App() {
     const x = [];
     const o = [];
 
-    currentBoardStatus.map((row, rowIndex) => {
-      return row.map((box, boxIndex) => {
+    currentBoardStatus.forEach((row, rowIndex) =>
+      row.forEach((box, boxIndex) => {
         if (box) {
-          return box === "✕"
+          box === "✕"
             ? x.push(3 * rowIndex + boxIndex + 1)
             : o.push(3 * rowIndex + boxIndex + 1);
         }
-      });
-    });
+      })
+    );
 
     let winner = null;
     winning.forEach((pattern) => {
