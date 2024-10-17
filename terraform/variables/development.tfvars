@@ -2,7 +2,7 @@ TF_VAR_region             = "ap-northeast-1"
 TF_VAR_resource_base_name = "peerapon-test"
 
 ec2_instance_type       = "t3.small"
-spot_instance_max_price = 0.01
+spot_instance_max_price = 0.015
 asg_configurations = {
   min_size         = 1
   max_size         = 2

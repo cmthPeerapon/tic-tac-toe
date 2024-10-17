@@ -50,3 +50,11 @@ module "infra" {
   spot_instance_max_price   = var.spot_instance_max_price
   asg_configurations        = var.asg_configurations
 }
+
+module "deploy" {
+  source                    = "./modules/deploy"
+  TF_VAR_resource_base_name = var.TF_VAR_resource_base_name
+
+  codedeploy_service_role_arn = module.iam.codedeploy_service_role_arn
+  aws_autoscaling_group_name  = module.infra.aws_autoscaling_group_name
+}

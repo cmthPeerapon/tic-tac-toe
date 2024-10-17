@@ -1,12 +1,3 @@
-data "aws_availability_zones" "available" {
-  state = "available"
-
-  filter {
-    name   = "region-name"
-    values = [var.TF_VAR_region]
-  }
-}
-
 locals {
   resource_to_tag = {
     "ec2"    = "instance"

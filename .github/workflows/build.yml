@@ -1,9 +1,9 @@
 name: Build Workflow
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Test Workflow"]
+    types: ["completed"]
 
 permissions:
   id-token: write
