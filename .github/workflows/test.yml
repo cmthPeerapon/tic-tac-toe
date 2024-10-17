@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-
+      - name: Install modules
+        run: npm i
       - name: Lint Test
         run: npm run lint
