@@ -91,6 +91,7 @@ function Version() {
 }
 
 function App() {
+  const [componentDidMount, setComponentDidMount] = useState(false);
   const [currentBoardStatus, setCurrentBoardStatus] = useState(
     Array(3).fill(Array(3).fill(null))
   );
