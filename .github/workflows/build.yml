@@ -1,8 +1,8 @@
-name: "Build Workflow"
+name: Build Workflow
 
 on:
   workflow_run:
-    workflows: ["Test Workflow"]
+    workflows: [Test Workflow]
     types: [completed]
     branches: "**"
 
@@ -12,7 +12,6 @@ permissions:
 
 jobs:
   BuildDockerImage:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
