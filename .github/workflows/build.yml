@@ -3,8 +3,8 @@ name: "Build Workflow"
 on:
   workflow_run:
     workflows: ["Test Workflow"]
-    types:
-      - completed
+    types: [completed]
+    branches: "**"
 
 permissions:
   id-token: write
