@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 function Board({ currentBoardStatus, updateMove, xTurn, winner }) {
   function makeMove(rowIndex, boxIndex) {
