@@ -1,5 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
-import App from "./App";
+import { App } from "../../App";
 
 test("renders tic-tac-toe app", () => {
   render(<App />);
@@ -18,12 +18,23 @@ test("click on 2 boxes", () => {
     leftBox.click();
   });
 
-  // expect(leftBox.innerHTML).toBe("✕");
-  expect(leftBox.innerHTML).toBe("");
+  expect(leftBox.innerHTML).toBe("✕");
+  // expect(leftBox.innerHTML).toBe("");
 
   act(() => {
     middleBox.click();
   });
 
   expect(middleBox.innerHTML).toBe("◯");
+
+  const buttons = screen.getAllByRole("button");
+
+  expect(buttons.length).toBe(3);
+
+  act(() => {
+    buttons[0].click();
+  });
+
+  expect(leftBox.innerHTML).toBe("");
+  expect(middleBox.innerHTML).toBe("");
 });
