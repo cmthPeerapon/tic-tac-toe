@@ -30,7 +30,7 @@ jobs:
               branch: "feature/terraform",
               event: "pull_request",
               status: "success",
-              per-page: 5
+              per_page: 5
             });
             console.log(runs);
             return runs.data.workflow_runs[0].id;
