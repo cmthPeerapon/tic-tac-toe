@@ -23,7 +23,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const runs = await octokit.rest.actions.listWorkflowRuns({
+            const runs = await github.rest.actions.listWorkflowRuns({
               owner: "cmthPeerapon",
               repo: "tic-tac-toe",
               workflow_id: "test.yml",
