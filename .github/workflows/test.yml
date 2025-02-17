@@ -29,7 +29,6 @@ jobs:
               workflow_id: "test.yml",
               branch: "feature/terraform",
               event: "pull_request",
-              status: "success",
               per_page: 5
             });
             console.log(runs);
