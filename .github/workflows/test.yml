@@ -34,7 +34,6 @@ jobs:
             const ids = runs.data.workflow_runs.map(run => ({
               id: run.id,
               url: run.html_url,
-              pr: run.pull_requests,
               date: run.run_started_at
             }));
             console.log(JSON.stringify(ids));
