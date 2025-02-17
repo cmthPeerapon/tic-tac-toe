@@ -1,17 +1,58 @@
-name: "Test Workflow"
+name: Test env workflow
 
 on:
-  push:
-    branches:
-      - "feature/*"
+  pull_request:
+    branches: ["main"]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  id-token: write
+  issues: write
+  pull-requests: write
 
 jobs:
-  RunTest:
+  test:
+    name: Linter code review and Jest jsdom test
+    runs-on: ubuntu-latest
+    outputs:
+      linter_result: ${{ steps.linter_code_review.outputs.result }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install modules
+        run: npm ci
+
+      - name: Linter code review
+        id: linter_code_review
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm run jest:unit
+
+      - name: Run integration tests
+        run: npm run jest:integration
+
+  Build:
+    needs: test
+    if: ${{ needs.test.outputs.linter_result == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Install modules
-        run: npm i
-      - name: Lint Test
-        run: npm run lint
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.IAM_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Build app
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: build/

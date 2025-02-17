@@ -1,30 +1,53 @@
-name: "Deploy Workflow"
+name: Test env workflow
 
 on:
-  workflow_run:
-    workflows: ["Build Workflow"]
-    types:
-      - completed
+  pull_request:
+    branches: ["main"]
+    types: [closed]
 
 permissions:
-  id-token: write
   contents: read
+  id-token: write
+  issues: write
+  pull-requests: write
 
 jobs:
-  DeployAppOnECS:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  deploy:
+    if: github.event.pull_request.merged == true
+    name: Linter code review and Jest jsdom test
     runs-on: ubuntu-latest
     steps:
-      - name: Git clone the repository
+      - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: AssumeRoleAndCallIdentity
-        id: print-to-log
-        uses: aws-actions/configure-aws-credentials@v4.0.2
+      - name: Get run ID
+        id: get-run-id
+        uses: actions/github-script@v7
         with:
-          role-to-assume: arn:aws:iam::857407436105:role/peerapon-ghwf-as-codedeploy
-          role-session-name: peerapon-ghwf-as-codedeploy
+          script: |
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: "cmthPeerapon",
+              repo: "tic-tac-toe",
+              workflow_id: "test.yml",
+              branch: "feature/terraform",
+              event: "pull_request",
+              status: "success",
+              per_page: 1
+            });
+            return runs.data.workflow_runs[0].id;
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: build/
+          run-id: ${{ steps.get-run-id.outputs.result }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.IAM_ROLE }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Sts GetCallerIdentity
-        run: aws sts get-caller-identity
+      - name: Deploy to S3
+        run: aws s3 sync build/ s3://${{ vars.S3_BUCKET }} --delete

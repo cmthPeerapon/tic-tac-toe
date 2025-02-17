@@ -1,5 +1,5 @@
 provider "aws" {
-  profile = "cmth_dev_profile"
+  # profile = "cmth_dev_profile"
   region  = var.TF_VAR_region
   # skip_credentials_validation = true
   # skip_metadata_api_check = true
