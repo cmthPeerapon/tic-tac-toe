@@ -31,7 +31,7 @@ jobs:
               event: "pull_request",
               per_page: 5
             });
-            console.log(runs);
+            console.log(JSON.stringify(runs));
             return runs.data.workflow_runs[0].id;
 
       - name: Print run ID
