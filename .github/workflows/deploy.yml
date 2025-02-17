@@ -38,6 +38,7 @@ jobs:
         with:
           name: build-artifact
           path: build/
+          github-token: ${{ secrets.GH_PAT }}
           run-id: ${{ steps.get-run-id.outputs.result }}
 
       - name: Configure AWS credentials
