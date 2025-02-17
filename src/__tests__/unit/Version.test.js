@@ -3,6 +3,6 @@ import { Version } from "../../components/Version";
 
 test("check version", () => {
   render(<Version />);
-  const version = screen.getByRole("text", { name: /version/i });
+  const version = screen.getByRole("textbox", { name: /version/i });
   expect(version.innerHTML).toBe("Version 1.1");
 });
