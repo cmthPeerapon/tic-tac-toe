@@ -18,31 +18,6 @@ jobs:
     outputs:
       linter_result: ${{ steps.linter_code_review.outputs.result }}
     steps:
-      - name: Get run ID
-        id: get-run-id
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const runs = await github.rest.actions.listWorkflowRuns({
-              owner: "cmthPeerapon",
-              repo: "tic-tac-toe",
-              workflow_id: "test.yml",
-              branch: "feature/terraform",
-              event: "pull_request",
-              status: "success",
-              per_page: 5
-            });
-            const ids = runs.data.workflow_runs.map(run => ({
-              id: run.id,
-              url: run.html_url,
-              date: run.run_started_at
-            }));
-            console.log(JSON.stringify(ids));
-            return runs.data.workflow_runs[0].id;
-
-      - name: Print run ID
-        run: echo ${{ steps.get-run-id.outputs.result }}
-
       - name: Checkout repo
         uses: actions/checkout@v4
 
