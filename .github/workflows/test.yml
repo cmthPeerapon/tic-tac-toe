@@ -31,7 +31,13 @@ jobs:
               event: "pull_request",
               per_page: 5
             });
-            console.log(JSON.stringify(runs));
+            const ids = runs.data.workflow_runs.map(run => ({
+              id: run.id,
+              url: run.html_url,
+              pr: run.pull_requests,
+              date: run.run_started_at
+            }));
+            console.log(JSON.stringify(ids));
             return runs.data.workflow_runs[0].id;
 
       - name: Print run ID
