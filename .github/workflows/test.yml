@@ -29,6 +29,7 @@ jobs:
               workflow_id: "test.yml",
               branch: "feature/terraform",
               event: "pull_request",
+              status: "success",
               per_page: 5
             });
             const ids = runs.data.workflow_runs.map(run => ({
