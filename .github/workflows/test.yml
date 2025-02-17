@@ -5,18 +5,10 @@ on:
     branches: ["main"]
     types: [opened, synchronize, reopened]
 
-permissions:
-  contents: read
-  id-token: write
-  issues: write
-  pull-requests: write
-
 jobs:
   test:
     name: Linter code review and Jest jsdom test
     runs-on: ubuntu-latest
-    outputs:
-      linter_result: ${{ steps.linter_code_review.outputs.result }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -36,17 +28,11 @@ jobs:
 
   Build:
     needs: test
-    if: ${{ needs.test.outputs.linter_result == 'success' }}
+    if: ${{ needs.test.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.IAM_ROLE }}
-          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Build app
         run: npm run build
